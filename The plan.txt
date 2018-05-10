@@ -1,0 +1,145 @@
+			━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+			Cluster Mining Optimization using Dynamic Bin Nonces
+			━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+Table of Contents
+─────────────────
+
+1 TODO Broad things
+.. 1.1 TODO Implement a fully connected node, – SERVER
+..... 1.1.1 To accept endpoints
+..... 1.1.2 Payout calculation
+.. 1.2 TODO Client
+..... 1.2.1 Join the pool, getting an id,,,
+..... 1.2.2 request block template
+..... 1.2.3 request bin
+..... 1.2.4 perform hashes, send reduced difficulty hashes to server
+..... 1.2.5 periodically check status to make sure working on the current block
+2 TODO Things to Do
+.. 2.1 server builds block template
+.. 2.2 Client will request for block
+.. 2.3 client will request for a bin
+.. 2.4 server dynamically decide bin size ——–
+..... 2.4.1 IMPL
+.. 2.5 Client receives bin, calculates hashes with nonces in the bin,
+.. 2.6 Client sends back the onces which satisfy the reduced difficulty
+.. 2.7 Verify, check whether the hash satisfies chain difficulty
+.. 2.8 If satisfied, calculate payouts, send ACCEPTED signal
+.. 2.9 Form estimates about when to preemtively send bins to high performin clients
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ Client                       Server    
+ +++++++++++++++++++++++++++  +++++++++ 
+ Not connected to the chain   Full node 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+1 TODO Broad things
+═══════════════════
+
+1.1 TODO Implement a fully connected node, – SERVER
+───────────────────────────────────────────────────
+
+1.1.1 To accept endpoints
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+◊ 1.1.1.1 GET /getblock
+
+
+◊ 1.1.1.2 POST /newclient – params - public_key
+
+
+◊ 1.1.1.3 POST /getbin – params - public_key, id
+
+
+◊ 1.1.1.4 POST /reduce_diff_hash - public_key, id, hashes
+
+
+◊ 1.1.1.5 GET /status
+
+  (Status check on current block being mined, and prev status(ACCEPTED,
+  ……))
+
+
+◊ 1.1.1.6 POST /mystatus — params - public_key, id
+
+  Tell you how you are doing, and your payouts
+
+
+1.1.2 Payout calculation
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+◊ 1.1.2.1 Maintain id with the reduced hashes in some persistence
+
+
+◊ 1.1.2.2 compensate on basis of number of reduced difficulty hashed.
+
+
+◊ 1.1.2.3 Make the payout transaction, and post on the network transaction pool
+
+
+1.2 TODO Client
+───────────────
+
+1.2.1 Join the pool, getting an id,,,
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+
+1.2.2 request block template
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+
+1.2.3 request bin
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+
+1.2.4 perform hashes, send reduced difficulty hashes to server
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+
+1.2.5 periodically check status to make sure working on the current block
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+
+2 TODO Things to Do
+═══════════════════
+
+2.1 server builds block template
+────────────────────────────────
+
+
+2.2 Client will request for block
+─────────────────────────────────
+
+
+2.3 client will request for a bin
+─────────────────────────────────
+
+
+2.4 server dynamically decide bin size ——–
+──────────────────────────────────────────
+
+2.4.1 IMPL
+╌╌╌╌╌╌╌╌╌╌
+
+
+2.5 Client receives bin, calculates hashes with nonces in the bin,
+──────────────────────────────────────────────────────────────────
+
+
+2.6 Client sends back the onces which satisfy the reduced difficulty
+────────────────────────────────────────────────────────────────────
+
+
+2.7 Verify, check whether the hash satisfies chain difficulty
+─────────────────────────────────────────────────────────────
+
+
+2.8 If satisfied, calculate payouts, send ACCEPTED signal
+─────────────────────────────────────────────────────────
+
+
+2.9 Form estimates about when to preemtively send bins to high performin clients
+────────────────────────────────────────────────────────────────────────────────
